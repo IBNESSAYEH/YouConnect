@@ -57,10 +57,10 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
 
-            return redirect()->route('books.index');
+            return redirect()->route('home');
         } else {
-           
-            return redirect()->route('register');
+
+            return redirect()->route('login');
         }
     }
 
