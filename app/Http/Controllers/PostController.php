@@ -6,6 +6,8 @@ use App\Models\Post;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -26,7 +28,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view("posts.create");
     }
 
     /**
@@ -35,9 +37,25 @@ class PostController extends Controller
      * @param  \App\Http\Requests\StorePostRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StorePostRequest $request)
+    public function store(Request $request)
     {
-        //
+        $request->validate([
+            'content' => 'required|string',
+            'image_path' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+
+        $imagePath = $request->file('image_path')->store('public');
+
+        // Create a new Post instance
+        $post = new Post();
+        $post->content = $request->input('content');
+        $post->image_path = $imagePath;
+        $post->user_id = 1;
+        $post->save();
+
+        // Redirect back with a success message
+        return redirect()->route('home');
     }
 
     /**
