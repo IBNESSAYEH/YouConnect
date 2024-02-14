@@ -1,24 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>User Profile</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <style>
-    /* Custom CSS styles */
-    .profile-picture {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-    }
-    .card {
-      margin-bottom: 20px;
-    }
-  </style>
-</head>
-<body>
-
+@extends('layouts.layout')
+@section('content')
 <div class="container">
   <div class="row">
     <div class="col-md-3">
@@ -52,3 +33,6 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
+
+
+@endsection
