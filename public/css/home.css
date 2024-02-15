@@ -1,0 +1,12 @@
+.profile-picture {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+  }
+  .post-image {
+    max-width: 100%;
+    height: auto;
+  }
+  .card {
+    margin-bottom: 20px;
+  }
