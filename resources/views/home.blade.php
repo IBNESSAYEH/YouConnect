@@ -69,6 +69,8 @@
             </div>
           </div>
           <!-- Add more posts as needed -->
+          </div>
+          <!-- Add more posts as needed -->
         </div>
         <div class="card-footer">
 
@@ -84,6 +86,7 @@
                 <button type="submit" name="submit"  class="btn btn-danger"><i class="fa-solid fa-heart"></i></button>
 
             </form>
+
         </div>
       </div>
       @endforeach
