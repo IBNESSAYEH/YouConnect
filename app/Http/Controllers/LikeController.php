@@ -6,6 +6,8 @@ use App\Models\Like;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreLikeRequest;
 use App\Http\Requests\UpdateLikeRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LikeController extends Controller
 {
@@ -35,9 +37,22 @@ class LikeController extends Controller
      * @param  \App\Http\Requests\StoreLikeRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreLikeRequest $request)
+    public function store(Request $request)
     {
-        //
+
+
+        $validatedData = $request->validate([
+            'post_id' => 'required',
+        ]);
+        $likeData = $request->only(['post_id']);
+        $likeData['user_id'] = Auth::id();
+
+        $checkLike = Like::where('user_id', Auth::id())->where('post_id', $request->post_id)->first();
+
+
+            Like::create($likeData);
+            return redirect()->back();
+
     }
 
     /**
@@ -80,8 +95,12 @@ class LikeController extends Controller
      * @param  \App\Models\Like  $like
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Like $like)
+    public function destroy(Like $id)
     {
-        //
+
+       
+        Like::destroy($id);
+        return redirect()->route('home');
+
     }
 }
