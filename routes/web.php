@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
 
 /*
@@ -23,6 +24,7 @@ Route::get('/profile', [HomeController::class, 'profile'])->name('profile');
 
 
 Route::resource('posts',PostController::class);
+Route::resource('likes',LikeController::class);
 
 
 
