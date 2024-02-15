@@ -1,6 +1,7 @@
 @extends('layouts.layout')
 @section('content')
 
+
 <div class="container-fluid">
   <div class="row">
     <!-- Sidebar -->
@@ -46,13 +47,35 @@
             </div>
             <div class="form-group">
               <input type="file" name="image_path" class="form-control-file">
+
             </div>
-            <button type="submit" name="submit" class="btn btn-primary">Post</button>
-          </form>
-        </div>
-      </div>
-      <!-- News Feed -->
-      @foreach ($posts as $post)
+            <!-- Main content -->
+            <div class="col-md-6">
+                <!-- Create Post -->
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <form method="post" action="{{ route('posts.store') }}" enctype="multipart/form-data">
+                            @csrf
+                            <div class="form-group">
+                                <textarea class="form-control" name="content" placeholder="What's on your mind?"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <input type="file" name="image_path" class="form-control-file">
+                            </div>
+                            <button type="submit" name="submit" class="btn btn-primary">Post</button>
+                        </form>
+                    </div>
+                </div>
+                <!-- News Feed -->
+                @foreach ($posts as $post)
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">News Feed</h5>
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">{{ $post->user->name }}</h6>
+                                    <p class="card-text">{{ $post->content }}</p>
+
 
       <div class="card">
         <div class="card-body">
@@ -84,15 +107,7 @@
                 <button type="submit" name="submit"  class="btn btn-danger"><i class="fa-solid fa-heart"></i></button>
 
             </form>
-        </div>
-      </div>
-      @endforeach
-    </div>
-    <!-- Right sidebar -->
-    <div class="col-md-3">
-      <!-- Right sidebar content goes here -->
-    </div>
-  </div>
-</div>
 
+        </div>
+    </div>
 @endsection
