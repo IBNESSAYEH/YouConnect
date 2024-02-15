@@ -22,6 +22,7 @@ Route::get('/', [HomeController::class, 'home'])->name('home');
 Route::get('/profile', [HomeController::class, 'profile'])->name('profile');
 
 
+Route::delete('/dislike', [LikeController::class, 'dislike'])->name('dislike');
 Route::resource('posts',PostController::class);
 Route::resource('likes',LikeController::class);
 
