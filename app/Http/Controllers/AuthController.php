@@ -25,14 +25,19 @@ class AuthController extends Controller
         'name' => 'required|string|max:255',
         'email' => 'required|email|unique:users|max:255',
         'password' => 'required|string|min:8|confirmed',
+        'profile' => 'image|mimes:jpeg,png,jpg,gif|max:2000000',
     ]);
 
-
+    if ($request->hasFile('profile')) {
+        $imagePath = $request->file('profile')->store('images', 'public');
+        $validatedData['profile'] = $imagePath;
+    }
     // Create a new user
     $user = User::create([
         'name' => $validatedData['name'],
         'email' => $validatedData['email'],
         'password' => bcrypt($validatedData['password']),
+        'profile' => $validatedData['profile'],
     ]);
 
 
@@ -50,6 +55,7 @@ class AuthController extends Controller
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
+
         ]);
 
 

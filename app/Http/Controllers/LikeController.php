@@ -28,7 +28,7 @@ class LikeController extends Controller
      */
     public function create()
     {
-        //
+    
     }
 
     /**
@@ -95,11 +95,12 @@ class LikeController extends Controller
      * @param  \App\Models\Like  $like
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Like $id)
+    public function dislike(Request $request)
     {
 
-       
-        Like::destroy($id);
+        $likeData = Like::where("Post_id", $request->post_id)->where("user_id", Auth::id())->first();
+
+        Like::destroy($likeData->id);
         return redirect()->route('home');
 
     }

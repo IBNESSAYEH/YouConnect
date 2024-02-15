@@ -8,7 +8,7 @@
             class="img-fluid" alt="Sample image">
         </div>
         <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-          <form action="{{ route("signup") }}" method="POST">
+          <form action="{{ route("signup") }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <div class="divider d-flex align-items-center my-4">
@@ -38,6 +38,9 @@
                 <label class="form-label" for="form3Example4">Confirm Password :</label>
                 <input type="password" name="password_confirmation" id="form3Example4" class="form-control form-control-lg"
                     placeholder="Confirm password" />
+            </div>
+            <div class="form-outline mb-3">
+                <input type="file" name="profile" id="form3Example4" class="form-control form-control-lg" />
             </div>
 
 
