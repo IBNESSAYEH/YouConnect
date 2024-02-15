@@ -28,31 +28,47 @@
       <!-- Create Post -->
       <div class="card mb-3">
         <div class="card-body">
-          <form>
+          <form method="post" action="{{ route('posts.store') }}" enctype="multipart/form-data">
+            @csrf
             <div class="form-group">
-              <textarea class="form-control" placeholder="What's on your mind?"></textarea>
+              <textarea class="form-control" name="content" placeholder="What's on your mind?"></textarea>
             </div>
             <div class="form-group">
-              <input type="file" class="form-control-file">
+              <input type="file" name="image_path" class="form-control-file">
             </div>
-            <button type="submit" class="btn btn-primary">Post</button>
+            <button type="submit" name="submit" class="btn btn-primary">Post</button>
           </form>
         </div>
       </div>
       <!-- News Feed -->
+      @foreach ($posts as $post)
+
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">News Feed</h5>
           <div class="card mb-3">
             <div class="card-body">
-              <h6 class="card-subtitle mb-2 text-muted">Post Author</h6>
-              <p class="card-text">Post Content</p>
-              <img src="post-image.jpg" alt="Post Image" class="post-image">
+              <h6 class="card-subtitle mb-2 text-muted">{{ $post->user->name }}</h6>
+              <p class="card-text">{{ $post->content }}</p>
+
+              {{ Auth::id() }}
+              @if ($post->image_path)
+              <img src="{{ asset('storage/images/' . $post->image_path) }}" alt="Post Image">
+          @endif
             </div>
           </div>
           <!-- Add more posts as needed -->
         </div>
+        <div class="card-footer">
+       
+            <form action="{{ route('likes.store') }}" method="post">
+                @csrf
+                <input type="hidden" name="post_id" value="{{ $post->id }}" >
+                <button type="submit" name="submit"  class="btn btn-primary">like</button>
+            </form>
+        </div>
       </div>
+      @endforeach
     </div>
     <!-- Right sidebar -->
     <div class="col-md-3">
