@@ -53,14 +53,14 @@
 
               {{ Auth::id() }}
               @if ($post->image_path)
-              <img src="{{ asset('storage/images/' . $post->image_path) }}" alt="Post Image">
+              <img src="{{ asset('storage/' . $post->image_path) }}" alt="Post Image" class="w-100">
           @endif
             </div>
           </div>
           <!-- Add more posts as needed -->
         </div>
         <div class="card-footer">
-       
+
             <form action="{{ route('likes.store') }}" method="post">
                 @csrf
                 <input type="hidden" name="post_id" value="{{ $post->id }}" >
