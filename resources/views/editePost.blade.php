@@ -17,7 +17,7 @@
         </div>
         <div class="form-group">
             <label for="prix">Image:</label>
-            <input type="number" class="form-control" id="prix" name="image_path" value="{{ old("image_path", $post->image_path ?? null) }}" >
+            <input type="file" class="form-control" id="prix" name="image_path" value="{{ old("image_path", $post->image_path ?? null) }}" >
         </div>
         <button type="submit" name="submit" class="btn btn-primary mt-3">Submit</button>
     </form>

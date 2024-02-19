@@ -78,9 +78,10 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function edit(Post $post)
+    public function edit($post)
     {
-        //
+        $post = Post::findOrFail($post);
+        return view("editePost", ["post" => $post]);
     }
 
     /**
@@ -92,7 +93,12 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
-        //
+        $post = Post::findOrFail($post);
+        $post->content = $request->input("content");
+        $post->image_path = $request->input("image_path");
+        $post->save();
+        session()->flash('status', 'post modifier avec successe');
+        return redirect()->route("books.index");
     }
 
     /**
