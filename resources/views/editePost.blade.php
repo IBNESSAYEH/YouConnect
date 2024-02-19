@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body class="container mt-5">
-    <form action="{{route('posts.update', $post->id)}}" method="POST">
+    <form action="{{route('posts.update', ['post'=>$post->id])}}" method="POST">
         @csrf
         @method('PUT')
         <div class="form-group">
