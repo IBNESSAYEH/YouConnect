@@ -83,7 +83,7 @@ class PostController extends Controller
         $post = Post::findOrFail($post);
         $post->content = $request->input("content");
         $post->image_path = $request->input("image_path");
-        $books->save();
+        $post->save();
         session()->flash('status', 'post modifier avec successe');
         return redirect()->route("books.index");
     }
