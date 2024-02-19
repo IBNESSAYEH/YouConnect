@@ -51,7 +51,7 @@ class PostController extends Controller
             $validatedData['image_path'] = $imagePath;
         }
 
-        // Assign the user ID to the post
+       
         $validatedData['user_id'] = auth()->user()->id;
 
         // Create a new post
