@@ -91,15 +91,38 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatePostRequest $request, Post $post)
-    {
-        $post = Post::findOrFail($post);
-        $post->content = $request->input("content");
-        $post->image_path = $request->input("image_path");
-        $post->save();
-        session()->flash('status', 'post modifier avec successe');
-        return redirect()->route("books.index");
+    public function update(Request $request, $post)
+{
+    // Validate the form data
+    $validatedData = $request->validate([
+    'content' => 'required',
+    'image_path' => 'image|mimes:jpeg,png,jpg,gif|max:2000000',
+]); 
+    // Retrieve the post instance
+    $post = Post::findOrFail($post);
+
+    // Update the content
+    $post->content = $validatedData['content'];
+
+    // Handle file upload if a new file is uploaded
+    if ($request->hasFile('image_path')) {
+        // Delete the old image if it exists
+        if ($post->image_path) {
+            Storage::disk('public')->delete($post->image_path);
+        }
+        // Store the new image
+        $imagePath = $request->file('image_path')->store('images', 'public');
+        $validatedData['image_path'] = $imagePath;
     }
+
+    // Save the updated post
+    $post->save();
+
+    // Redirect or perform any other actions after successful post update
+    return redirect()->route('home');
+}
+
+
 
     /**
      * Remove the specified resource from storage.
