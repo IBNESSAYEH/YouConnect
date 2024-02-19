@@ -51,8 +51,8 @@ class PostController extends Controller
             $validatedData['image_path'] = $imagePath;
         }
 
-       
-        $validatedData['user_id'] = auth()->user()->id;
+
+        $validatedData['user_id'] = auth::id();
 
         // Create a new post
         $post = Post::create($validatedData);
