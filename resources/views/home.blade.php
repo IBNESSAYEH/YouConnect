@@ -4,12 +4,12 @@
     <div class="container-fluid">
         <div class="row">
             <!-- Sidebar -->
-            <div class="col-md-3">
+            <div class="col-md-6">
                 <div class="card">
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title align-self-center">{{ Auth::user()->name }}</h5>
                         <img src="{{ asset('storage/' . Auth::user()->profile) }}" alt="Profile Picture"
-                            class="profile-picture mb-3 align-self-center">
+                            class="profile-picture mb-3 align-self-center" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%;">
                         <p class="card-text">Followers: </p>
                         <p class="card-text">Following: </p>
                         <a href="#" class="btn btn-primary">Edit Profile</a>
@@ -21,13 +21,13 @@
                         <p class="card-text">You have X connections</p>
                         <ul class="list-group">
                             @forelse ($users as $user)
-                                <li class="list-group-item d-flex align-items-center">
-                                    <img src="{{ asset('storage/' . $user->profile) }}" alt="Profile Picture"
-                                        class="profile-picture mr-3">
-                                    <p>{{ $user->name }}</p>
-                                    <div class="ml-auto">
-                                        <button class="btn btn-sm btn-outline-success">Connect</button>
+                                <li class="list-group-item d-flex align-items-center justify-content-between">
+                                    <div>
+                                        <img src="{{ asset('storage/' . $user->profile) }}" alt="Profile Picture"
+                                            class="profile-picture mr-3" style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%;">
+                                        <p>{{ $user->name }}</p>
                                     </div>
+                                    <button class="btn btn-sm btn-outline-success">Connect</button>
                                 </li>
                             @empty
                                 <li class="list-group-item">No connections</li>
@@ -90,7 +90,7 @@
                                     @method('DELETE')
                                     <input type="hidden" name="post_id" value="{{ $post->id }}">
                                     <button type="submit" name="submit" class="btn btn-outline-danger">
-                                        <i class="fas fa-heart"></i> Unlike
+                                        <i class="fas fa-heart"></i> dislike
                                     </button>
                                 </form>
                             </div>
