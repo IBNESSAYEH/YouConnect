@@ -90,7 +90,7 @@
                                     @method('DELETE')
                                     <input type="hidden" name="post_id" value="{{ $post->id }}">
                                     <button type="submit" name="submit" class="btn btn-outline-danger">
-                                        <i class="fas fa-heart"></i> Unlike
+                                        <i class="fas fa-heart"></i> dislike
                                     </button>
                                 </form>
                             </div>
