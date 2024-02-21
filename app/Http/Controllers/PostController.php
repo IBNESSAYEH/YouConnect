@@ -38,7 +38,8 @@ class PostController extends Controller
      * @param  \App\Http\Requests\StorePostRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+   
+        public function store(Request $request)
     {
         // Validate the form data
         $validatedData = $request->validate([
@@ -52,9 +53,14 @@ class PostController extends Controller
             $validatedData['image_path'] = $imagePath;
         }
 
+<<<<<<< HEAD
 
         $validatedData['user_id'] = auth()->user()->id;
 
+=======
+        // Assign the user ID to the post
+        $validatedData['user_id'] = auth()->user()->id;
+>>>>>>> c1039a83e0bd9bf74b99518318867bde0148b599
 
         // Create a new post
         $post = Post::create($validatedData);
@@ -63,6 +69,7 @@ class PostController extends Controller
         return redirect()->route('home');
     }
 
+    
     /**
      * Display the specified resource.
      *
