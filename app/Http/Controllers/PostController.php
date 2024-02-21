@@ -132,9 +132,15 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+  
+        public function destroy($postId)
     {
-        $post->delete();
-        return redirect()->route('home');
+        $DBPost = Post::find($postId);
+            if($DBPost && $DBPost->exists()){
+            $DBPost->delete();
+            return redirect()->route('home');
+            }
+            return redirect()->route('profile');
     }
+
 }
