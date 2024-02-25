@@ -98,8 +98,19 @@ class CommentController extends Controller
      * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Comment $comment)
-    {
-        //
+
+public function destroy($id)
+{
+    $comment = Comment::findOrFail($id);
+
+    if (Auth::id() !== $comment->user_id) {
+        return back()->with('error', 'Vous n\'êtes pas autorisé à supprimer ce commentaire.');
     }
+
+    $comment->delete();
+
+    return back()->with('success', 'Commentaire supprimé avec succès.');
+}
+
+
 }

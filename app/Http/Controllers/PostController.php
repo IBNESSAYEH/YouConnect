@@ -38,7 +38,7 @@ class PostController extends Controller
      * @param  \App\Http\Requests\StorePostRequest  $request
      * @return \Illuminate\Http\Response
      */
-   
+
         public function store(Request $request)
     {
         // Validate the form data
@@ -63,7 +63,7 @@ class PostController extends Controller
         return redirect()->route('home');
     }
 
-    
+
     /**
      * Display the specified resource.
      *
@@ -131,15 +131,19 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-  
-        public function destroy($postId)
-    {
-        $DBPost = Post::find($postId);
-            if($DBPost && $DBPost->exists()){
-            $DBPost->delete();
-            return redirect()->route('home');
-            }
-            return redirect()->route('profile');
-    }
+
+     public function destroy($postId)
+     {
+         $post = Post::findOrFail($postId);
+
+         if (auth()->user()->id !== $post->user_id) {
+             return redirect()->route('home')->with('error', 'Vous n\'êtes pas autorisé à supprimer ce post.');
+         }
+
+         $post->delete();
+
+         return redirect()->route('home')->with('success', 'Post supprimé avec succès.');
+     }
+
 
 }

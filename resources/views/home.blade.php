@@ -122,6 +122,13 @@
                                         <h2 class="font-bold text-slate-900 text-2xl">{{ $comment->user->name }}</h2>
                                     </div>
                                     <p class="mt-4 text-slate-800 sm:leading-loose">{{ $comment->content }}</p>
+                                    <form action="{{route('commantaire.destroy', $comment->id)}}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                    </form>
                                 </div>
                         </div>
                         @endforeach
