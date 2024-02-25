@@ -6,9 +6,16 @@ use App\Models\Comment;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCommentRequest;
 use App\Http\Requests\UpdateCommentRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class CommentController extends Controller
 {
+
+
+
+
     /**
      * Display a listing of the resource.
      *
@@ -26,7 +33,7 @@ class CommentController extends Controller
      */
     public function create()
     {
-        //
+        // return view("posts.create");
     }
 
     /**
@@ -35,9 +42,20 @@ class CommentController extends Controller
      * @param  \App\Http\Requests\StoreCommentRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreCommentRequest $request)
+    public function store(Request $request)
     {
-        //
+        $request->validate([
+            'comment'=>['required','string','between:2,255'],
+        ]);
+
+         Comment::create([
+            'content' =>$request->comment,
+            'post_id' => $request->postId,
+            'user_id' =>Auth::id(),
+
+         ]);
+
+        return back()->with('commantaire publié !');
     }
 
     /**
