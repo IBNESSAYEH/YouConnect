@@ -30,9 +30,7 @@ Route::resource('likes',LikeController::class);
 Route::resource('commantaire',CommentController::class);
 Route::resource('followers',FolowerController::class);
 
-
-Route::get('/search',[AuthController::class,'search']);
-
+Route::get('/search', [AuthController::class, 'search']);
 
 Route::get('/register', [AuthController::class, 'register'])->name('register');
 Route::get('/login', [AuthController::class, 'login'])->name('login');

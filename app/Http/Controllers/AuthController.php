@@ -88,8 +88,7 @@ class AuthController extends Controller
             $users = User::where('name', 'like', '%' . $keyword . '%')->get();
         }
 
-        // Pass the users data to the view
-        return view('layouts.searchcard')->with(['users' => $users]);
+        // Return the view with the users data
+        return view('layouts.searchcard', compact('users'));
     }
-
 }

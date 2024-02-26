@@ -53,28 +53,26 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-    var searchTitleInput = document.getElementById("search_title");
-    var searchResultContainer = document.getElementById("searchResults");
+      $(document).ready(function() {
+    $('#search_title').on('keyup', function() {
+        var title = $(this).val();
 
-    searchTitleInput.addEventListener("keyup", function () {
-        var title = this.value;
-
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', '/search/?title_s=' + encodeURIComponent(title), true);
-        xhr.onload = function () {
-            if (xhr.status >= 200 && xhr.status < 300) {
-                searchResultContainer.innerHTML = xhr.responseText;
-            } else {
-                console.error("Error during search:", xhr.statusText);
+        $.ajax({
+            type: 'GET',
+            url: '/search',
+            data: {
+                title_s: title
+            },
+            success: function(data) {
+                $('#searchResults').html(data);
+            },
+            error: function(xhr, status, error) {
+                console.error("Error during search:", error);
             }
-        };
-        xhr.onerror = function () {
-            console.error("Error during search:", xhr.statusText);
-        };
-        xhr.send();
+        });
     });
 });
+
 
     </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
