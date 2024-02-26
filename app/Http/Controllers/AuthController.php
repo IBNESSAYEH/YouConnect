@@ -76,5 +76,20 @@ class AuthController extends Controller
 
         return redirect()->route('login'); // Redirect to your login page after logout
     }
+    public function search(Request $request)
+    {
+        $keyword = $request->input('title_s');
+
+        if ($keyword === '') {
+            // If the search keyword is empty, return all users or handle as needed
+            $users = User::all();
+        } else {
+            // Search for users with names containing the keyword
+            $users = User::where('name', 'like', '%' . $keyword . '%')->get();
+        }
+
+        // Pass the users data to the view
+        return view('layouts.searchcard')->with(['users' => $users]);
+    }
 
 }
