@@ -38,6 +38,15 @@
                 </form>
             </div>
         </div>
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="http://127.0.0.1:8000/chatify">
+                <div class=" d-flex align-items-center "><i class="fa-solid fa-bell me-1"></i>
+
+                        <p class="btn btn-danger  p-0 rounded-circle m-0">{{ $messagesCount }}</p>
+
+                </div>
+            </a>
+        </li>
     </nav>
     <div id="searchResults">
     @yield('content')

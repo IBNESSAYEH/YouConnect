@@ -29,7 +29,12 @@
                                     style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%;">
                                 <p>{{ $user->name }}</p>
                             </div>
-                            <button class="btn btn-sm btn-outline-success">Connect</button>
+                            <form method="POST" action="{{ route('followers.store') }}">
+                                @csrf
+                                <input type="hidden" name="receiver" value="1"> <!-- Replace "1" with the actual receiver ID -->
+                                <button type="submit" class="btn btn-sm btn-outline-success">Follow</button>
+                            </form>
+                            <a href="http://127.0.0.1:8000/chatify/{{ $user->id }}"  class="btn btn-sm btn-outline-success">send message</a>
                         </li>
                         @empty
                         <li class="list-group-item">No connections</li>

@@ -8,7 +8,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
-
+use App\Http\Controllers\FolowerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +28,7 @@ Route::delete('/dislike', [LikeController::class, 'dislike'])->name('dislike');
 Route::resource('posts',PostController::class);
 Route::resource('likes',LikeController::class);
 Route::resource('commantaire',CommentController::class);
+Route::resource('followers',FolowerController::class);
 
 
 Route::get('/search',[AuthController::class,'search']);
