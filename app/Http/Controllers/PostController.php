@@ -41,25 +41,25 @@ class PostController extends Controller
 
         public function store(Request $request)
     {
-        // Validate the form data
+        
         $validatedData = $request->validate([
             'content' => 'required',
             'image_path' => 'image|mimes:jpeg,png,jpg,gif|max:2000000',
         ]);
 
-        // Handle file upload
+
         if ($request->hasFile('image_path')) {
             $imagePath = $request->file('image_path')->store('images', 'public');
             $validatedData['image_path'] = $imagePath;
         }
 
-        // Assign the user ID to the post
+
         $validatedData['user_id'] = auth()->user()->id;
 
-        // Create a new post
+
         $post = Post::create($validatedData);
 
-        // Redirect or perform any other actions after successful post creation
+
         return redirect()->route('home');
     }
 
@@ -145,6 +145,6 @@ class PostController extends Controller
          return redirect()->route('home')->with('success', 'Post supprimé avec succès.');
      }
 
-    
+
 
 }
