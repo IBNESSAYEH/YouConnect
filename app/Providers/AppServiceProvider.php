@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\ChMessage;
+use Carbon\Carbon;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +25,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        view()->composer('*', function ($view) {
+            $messagesCount = ChMessage::where('to_id', auth()->id())
+                                           ->count();
+            $view->with('messagesCount', $messagesCount);
+        });
     }
 }
