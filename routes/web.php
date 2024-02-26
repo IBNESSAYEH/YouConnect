@@ -7,6 +7,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\FolowerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,12 +24,14 @@ use App\Http\Controllers\PostController;
 Route::get('/', [HomeController::class, 'home'])->name('home');
 Route::get('/profile', [HomeController::class, 'profile'])->name('profile');
 
-
 Route::delete('/dislike', [LikeController::class, 'dislike'])->name('dislike');
 Route::resource('posts',PostController::class);
 Route::resource('likes',LikeController::class);
+Route::resource('commantaire',CommentController::class);
+Route::resource('followers',FolowerController::class);
 
 
+Route::get('/search',[AuthController::class,'search']);
 
 
 Route::get('/register', [AuthController::class, 'register'])->name('register');

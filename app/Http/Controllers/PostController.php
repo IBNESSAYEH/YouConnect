@@ -8,6 +8,7 @@ use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -37,29 +38,31 @@ class PostController extends Controller
      * @param  \App\Http\Requests\StorePostRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+
+        public function store(Request $request)
     {
-        // Validate the form data
+        
         $validatedData = $request->validate([
             'content' => 'required',
             'image_path' => 'image|mimes:jpeg,png,jpg,gif|max:2000000',
         ]);
 
-        // Handle file upload
+
         if ($request->hasFile('image_path')) {
             $imagePath = $request->file('image_path')->store('images', 'public');
             $validatedData['image_path'] = $imagePath;
         }
 
-        // Assign the user ID to the post
+
         $validatedData['user_id'] = auth()->user()->id;
 
-        // Create a new post
+
         $post = Post::create($validatedData);
 
-        // Redirect or perform any other actions after successful post creation
+
         return redirect()->route('home');
     }
+
 
     /**
      * Display the specified resource.
@@ -78,9 +81,10 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function edit(Post $post)
+    public function edit($post)
     {
-        //
+        $post = Post::findOrFail($post);
+        return view("editePost", ["post" => $post]);
     }
 
     /**
@@ -90,10 +94,36 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatePostRequest $request, Post $post)
-    {
-        //
+    public function update(Request $request, $id)
+{
+    // Validate the form data
+    $validatedData = $request->validate([
+        'content' => 'required',
+        'image_path' => 'image|mimes:jpeg,png,jpg,gif|max:2000000',
+    ]);
+
+    // Retrieve the post
+    $post = Post::findOrFail($id);
+
+    // Check if the authenticated user owns the post
+    if ($post->user_id !== auth()->user()->id) {
+        return back()->with('error', 'You are not authorized to update this post.');
     }
+
+    // Handle file upload
+    if ($request->hasFile('image_path')) {
+        $imagePath = $request->file('image_path')->store('images', 'public');
+        $validatedData['image_path'] = $imagePath;
+    }
+
+    // Update the post
+    $post->update($validatedData);
+
+    // Redirect or perform any other actions after successful post update
+    return redirect()->route('home');
+}
+
+
 
     /**
      * Remove the specified resource from storage.
@@ -101,9 +131,20 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
-    {
-        $post->delete();
-        return redirect()->route('home');
-    }
+
+     public function destroy($postId)
+     {
+         $post = Post::findOrFail($postId);
+
+         if (auth()->user()->id !== $post->user_id) {
+             return redirect()->route('home')->with('error', 'Vous n\'êtes pas autorisé à supprimer ce post.');
+         }
+
+         $post->delete();
+
+         return redirect()->route('home')->with('success', 'Post supprimé avec succès.');
+     }
+
+
+
 }

@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body class="container mt-5">
-    <form action="{{route('posts.update', $post->id)}}" method="POST">
+    <form action="{{route('posts.update', ['post'=>$post->id])}}" method="POST"  enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="form-group">
@@ -17,7 +17,7 @@
         </div>
         <div class="form-group">
             <label for="prix">Image:</label>
-            <input type="number" class="form-control" id="prix" name="image_path" value="{{ old("image_path", $post->image_path ?? null) }}" >
+            <input type="file" class="form-control" id="prix" name="image_path"  >
         </div>
         <button type="submit" name="submit" class="btn btn-primary mt-3">Submit</button>
     </form>

@@ -6,6 +6,8 @@ use App\Models\Folower;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreFolowerRequest;
 use App\Http\Requests\UpdateFolowerRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FolowerController extends Controller
 {
@@ -26,7 +28,7 @@ class FolowerController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -35,9 +37,21 @@ class FolowerController extends Controller
      * @param  \App\Http\Requests\StoreFolowerRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreFolowerRequest $request)
+    public function store(Request $request)
     {
-        //
+
+        $validatedData = $request->validate([
+            'receiver' => 'required|integer',
+        ]);
+
+
+        $follower = new Folower();
+        $follower->receiver = $validatedData['receiver'];
+        $follower->user_id = auth()->id();
+        $follower->save();
+
+
+        return redirect()->route('home');
     }
 
     /**
