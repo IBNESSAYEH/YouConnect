@@ -61,8 +61,8 @@
                     </form>
                 </div>
             </div>
-            <!-- News Feed -->
-            @foreach ($posts as $post)
+       
+            @foreach($posts as $post)
             <div class="card mb-3">
                 <div class="card-body">
                     <div class="card-header d-flex align-items-center">
@@ -119,6 +119,7 @@
                         @enderror
                     </form>
                     <div class="space-y-8">
+
                         @foreach($post->comments as $comment)
                         <div class="flex bg-slate-50 p-6 rounded-lg">
                         <img class="w-10 h-10 sm:w-12 sm:h-12 object-cover mt-2" style="border-radius: 50%;" src="{{ Gravatar::get($comment->user->email) }}" alt="Image de profil de {{ $comment->user->name }}">
@@ -140,8 +141,9 @@
                     </div>
                 </div>
             </div>
-            @endforeach
+
         </div>
+        @endforeach
         <!-- Right sidebar -->
         <div class="col-md-3">
             <!-- Right sidebar content goes here -->
