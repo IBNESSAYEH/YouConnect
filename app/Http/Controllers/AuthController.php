@@ -2,13 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\Reservation;
 use App\Models\User;
-use Illuminate\Http\Request;
+use App\Services\AuthService;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+    private $userAuthenticated ;
+    public function __construct(AuthService $authService){
+        $this->userAuthenticated = $authService;
+    }
 
     public function register(){
        return view("Auth.Register");
@@ -17,35 +22,15 @@ class AuthController extends Controller
         return view("Auth.Login");
     }
     public function signup(Request $request){
+        $user = $this->userAuthenticated->register($request);
 
 
-
-      // Validate the form data
-      $validatedData = $request->validate([
-        'name' => 'required|string|max:255',
-        'email' => 'required|email|unique:users|max:255',
-        'password' => 'required|string|min:8|confirmed',
-        'profile' => 'image|mimes:jpeg,png,jpg,gif|max:2000000',
-    ]);
-
-    if ($request->hasFile('profile')) {
-        $imagePath = $request->file('profile')->store('images', 'public');
-        $validatedData['profile'] = $imagePath;
-    }
-    // Create a new user
-    $user = User::create([
-        'name' => $validatedData['name'],
-        'email' => $validatedData['email'],
-        'password' => bcrypt($validatedData['password']),
-        'profile' => $validatedData['profile'],
-    ]);
-
-
-    if ($user) {
+    if ($user === true) {
 
         return redirect()->route('login');
     } else {
-        return redirect()->route('register');
+
+        return redirect()->route('register')->with('user', $user);
     }
 
     }
