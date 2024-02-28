@@ -8,6 +8,34 @@
             class="img-fluid" alt="Sample image">
         </div>
         <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+            @if(session()->has('user'))
+            @php
+                $user = session('user');
+            @endphp
+
+            <div class="alert alert-primary">
+                @if(isset($user['name']))
+                    <p>Name: {{ $user['name'] }}</p>
+                @endif
+
+                @if(isset($user['email']))
+                    <p>Email: {{ $user['email'] }}</p>
+                @endif
+
+                @if(isset($user['password']))
+                    <ul class="alert alert-danger">
+                        @foreach($user['password'] as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                @endif
+
+                @if(isset($user['profile']))
+                    <p>Profile: {{ $user['profile'] }}</p>
+                @endif
+            </div>
+        @endif
+
           <form action="{{ route("signup") }}" method="POST" enctype="multipart/form-data">
             @csrf
 
